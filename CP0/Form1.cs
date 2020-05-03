@@ -11,13 +11,23 @@ using System.Timers;
 
 namespace CP0
 {
+    public delegate void controlKey(char C);
+    public delegate void ObjSend(Form1 obj);
+    public delegate void LvlChoosen(string x);
+
     public partial class Form1 : Form
     {
         private static Level Lvl;
         public Graphics dc;
-        const int lvlc = 3;
+        const int lvlc = 4;
         int currChoice = 1;
         bool newStart = true;
+        bool GS = false;
+
+        public event controlKey controlKeyPressed;
+        public event ObjSend TimeTickUpdate;
+        public event LvlChoosen stringGotten;
+        public event ObjSend LvlCreate;
 
         public Form1()
         {
@@ -29,7 +39,7 @@ namespace CP0
            //Graphics gr = Graphics.FromHwnd(pictureBox2.Handle);
            // gr.Clear(Color.White);
             pictureBox2.Load("./Sprites/STARTcl.png");
-            Level Lvl = new Level();
+            
 
         }
 
@@ -67,7 +77,7 @@ namespace CP0
             {
                 label1.Visible = true;
                 pictureBox1.Load("./Sprites/LvlChoiceBFG.png");
-                Lvl = new Level();
+                Lvl = new Level(this);
                 newStart = false;
             }
             if (t != 13)
@@ -87,13 +97,14 @@ namespace CP0
                 label1.Text = currChoice.ToString();
             }
             else 
-            { 
-                Lvl.setMatr("./Levels/"+currChoice+".kl");
+            {
+                GS = true;
+                stringGotten("./Levels/"+currChoice+".kl");
                 label1.Visible = false;
                 pictureBox1.BackgroundImage = CP0.Properties.Resources.fontCLR;
                 pictureBox1.Image = CP0.Properties.Resources.fontCLR;
                 dc = pictureBox1.CreateGraphics();
-                Lvl.createLvl(this);
+                LvlCreate(this);
                 SetTimer();
             }
         }
@@ -109,10 +120,23 @@ namespace CP0
             // установка переменной c = коду клавиши
             if (pictureBox2.Visible == false)
             {
-                Lvl.setC(e.KeyChar);
-                if (timer1.Enabled == false)
-                {
+                //Lvl.setC(e.KeyChar);
+
+                if ((timer1.Enabled == false) && (GS == false))
                     LvlChoice(e.KeyChar);
+
+                else
+                {
+                    switch (e.KeyChar)
+                    {
+                        case 'p': timer1.Enabled = false; break;
+                        case 'u': pictureBox1.BackgroundImage = CP0.Properties.Resources.fontCLR;
+                            pictureBox1.Image = CP0.Properties.Resources.fontCLR;
+                            Lvl = new Level(this);
+                            LvlCreate(this); break;
+                        case 'k': timer1.Enabled = true; break;
+                        default: controlKeyPressed(e.KeyChar); break;
+                    }
                 }
             }
             
@@ -120,13 +144,14 @@ namespace CP0
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if ((Lvl.status != 12) && (Lvl.status != 13))
+            if ((Lvl.getStatus() != 12) && (Lvl.getStatus() != 13))
             {
                 for (int i=0; i<4; i++)
-                Lvl.refresh(this);
+                 TimeTickUpdate(this);
             }
             else
             {
+                GS = false;
                 timer1.Enabled = false;
                 newStart = true;
             }

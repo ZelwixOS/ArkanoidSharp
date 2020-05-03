@@ -20,3 +20,10 @@ D:\Univ\Programms\CP0\CP0\bin\Debug\CP0.pdb
 D:\Univ\Programms\ArkanoidSharp\CP0\bin\Debug\CP0.exe.config
 D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.exe
 D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.pdb
+D:\Univ\Programms\ArkanoidSharp\CP0\bin\Debug\CP0.exe
+D:\Univ\Programms\ArkanoidSharp\CP0\bin\Debug\CP0.pdb
+D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.csprojResolveAssemblyReference.cache
+D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.balls.resources
+D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.Form1.resources
+D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.Properties.Resources.resources
+D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.csproj.GenerateResource.Cache

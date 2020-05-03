@@ -9,6 +9,11 @@ namespace CP0
 {
     class FireBall : Ball
     {
+        public FireBall(Level lv)
+        {
+            lv.MoveBall += move;
+            lv.SBlock += show;
+        }
 
         public override void changeDir(char r, float c, float s)
         {

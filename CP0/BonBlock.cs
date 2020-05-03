@@ -11,12 +11,14 @@ namespace CP0
     {
         private Bitmap blocks;
 
-        public BonBlock(int x, int y, char ID)
+        public BonBlock(int x, int y, char ID, Level lv)
         {
             this.x=x;
             this.y=y;
             this.ID = ID;
+            lv.SBlock += show;
         }
+
         public override void show(Form1 f1)
         {
             blocks = new Bitmap(CP0.Properties.Resources.BonBlock64);

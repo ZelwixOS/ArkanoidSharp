@@ -15,13 +15,29 @@ namespace CP0
         public Ball()
         {
         }
-        public Ball(float x, float y, float dx, float dy)
+        public Ball(Level lv)
+        {
+            lv.MoveBall += move;
+            lv.SBlock += show;
+        }
+
+        
+
+        public Ball(float x, float y, float dx, float dy, Level lv)
         {
             this.x = x;
             this.y = y;
             this.dx = dx;
             this.dy = dy;
+            lv.MoveBall += move;
         }
+
+        public void StopDraw(Level lv)
+        {
+            lv.MoveBall -= move;
+            lv.SBlock -= show;
+        }
+
         public void startConf(float x, float y)
         {
             this.x = x;

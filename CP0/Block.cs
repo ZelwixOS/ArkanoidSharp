@@ -18,11 +18,22 @@ namespace CP0
         {
         }
 
-        public Block(int x, int y, char ID)
+        public Block(Level lv)
+        {
+            lv.SBlock += show;
+        }
+
+        public Block(int x, int y, char ID, Level lv)
         {
             this.x=x;
             this.y=y;
             this.ID = ID;
+            lv.SBlock += show;
+        }
+
+        public void AgreeH(Level lv)
+        {
+            lv.HBlock += hide;
         }
 
         public char GetID()

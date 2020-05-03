@@ -11,10 +11,11 @@ namespace CP0
     {
        private Bitmap platf;
        public int x, w;
-       public Platform(int x, int w)
+       public Platform(int x, int w, Level lv)
        {
            this.x = x;
            this.w = w;
+           lv.SBlock += show;
        }
 
        public int getX()

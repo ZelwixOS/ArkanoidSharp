@@ -18,12 +18,12 @@ namespace CP0
 
         }
 
-        public Bonus(float x, float y, char ID)
+        public Bonus(float x, float y, char ID, Level lv)
         {
             this.x = x;
             this.y = y;
             this.ID = ID;
-
+            lv.SBlock += show;
         }
 
         public float GetX()
