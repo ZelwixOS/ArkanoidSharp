@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace CP0
 {
+    [Serializable]
     class BonBlock : Block
     {
         private Bitmap blocks;

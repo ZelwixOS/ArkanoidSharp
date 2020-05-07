@@ -5,18 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Drawing;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace CP0
 {
+
+
     public delegate void Move(Form1 f1, int v);
     public delegate void ShowHide(Form1 f1);
+    public delegate void PlatfMove(char key, Form1 f1, int k);
+    public delegate void BonMove(int k, Form1 f1);
+    public delegate bool Direction(char r, float c, float s);
 
+
+    [Serializable]
     class Level
     {
         //public event controlKey controlKeyPressed;
         public event Move MoveBall;
         public event ShowHide SBlock;
         public event ShowHide HBlock;
+        public event PlatfMove PlatfMove;
+        public event BonMove MoveBonus;
+        public event ShowHide HideBon;
+        public event Direction BallDChange;
+        public event ShowHide SBon;
+        public event ShowHide BallStart;
 
         protected char[,] matr = new char[5, 9];
         public int status;
@@ -43,6 +59,45 @@ namespace CP0
         bool st5 = false;
         bool fd = true;
 
+        public void SaveLevel()
+        {
+            IFormatter format = new BinaryFormatter();
+            Stream stream = new FileStream("./Save/platfSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            format.Serialize(stream, platf);
+            stream.Close();
+            stream = new FileStream("./Save/ballSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            format.Serialize(stream, ball);
+            stream.Close(); 
+            ////
+            stream = new FileStream("./Save/ukbSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            format.Serialize(stream, ukb);
+            stream.Close();
+            stream = new FileStream("./Save/bonSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+            format.Serialize(stream, bon);
+            stream.Close();
+        }
+
+
+        public void LoadLevel()
+        {
+            IFormatter format = new BinaryFormatter();
+            Stream stream = new FileStream("./Save/platfSP.bin", FileMode.Open);
+            platf = (Platform) format.Deserialize(stream);
+            stream.Close();
+
+            stream = new FileStream("./Save/ballSP.bin", FileMode.Open);  
+            ball = (Ball)format.Deserialize(stream);
+            stream.Close();
+
+            stream = new FileStream("./Save/ukbSP.bin", FileMode.Open);
+            ukb = (Block[,]) format.Deserialize(stream);
+            stream.Close();
+
+            stream = new FileStream("./Save/bonSP.bin", FileMode.Open);
+            bon = (Bonus[]) format.Deserialize(stream);
+            stream.Close();
+        }
+
         public int getStatus()
         {
             return status;
@@ -57,6 +112,21 @@ namespace CP0
         {
             f1.stringGotten += setMatr;
             f1.LvlCreate += createLvl;
+
+        }
+
+        public void LvlInter(Form1 f1)
+        {
+            f1.controlKeyPressed += setC;
+            f1.TimeTickUpdate += refresh;
+        }
+
+        public void LevelOff(Form1 f1)
+        {
+            f1.stringGotten -= setMatr;
+            f1.LvlCreate -= createLvl;
+            f1.controlKeyPressed -= setC;
+            f1.TimeTickUpdate -= refresh;
         }
 
         protected void setC(char kb)
@@ -98,33 +168,33 @@ namespace CP0
                     if ((c == 32) && (status == 2))
                     {
                         status = 1;
-                        ball.startZap(f1); 
+                        BallStart(f1); 
                     } // запуск игры при нажатии на пробел
 
                     if (status == 5)
                     {
-                        if (c == 100) // вправо
+                        if ((c == 'в') || (c == 'В') || (c == 'd') || (c == 'D')) // вправо
                         {
-     
-                            ball.changeDir((char)5, 1, 0);
+                            if (BallDChange!=null)
+                            BallDChange((char)5, 1, 0);
                         }
-                        else if (c == 97)
+                        else if ((c == 'a') || (c == 'A') || (c == 'ф') || (c == 'Ф'))
                         {
-                       
-                            ball.changeDir((char)5, -1, 0);
+                            if (BallDChange != null)
+                                BallDChange((char)5, -1, 0);
                         }
                     } // отклонение при прилипании
 
 
-                    platf.move(c, f1, tik);
+                    PlatfMove(c, f1, tik);
     
 
                     if (status == 2)
                     {
-                      
-                        ball.changeDir(c, 0, 0);
-
-                        MoveBall(f1, tik);
+                        if (BallDChange!=null ) 
+                            if (BallDChange(c, 0, 0))
+                                if (MoveBall != null)
+                                    MoveBall(f1, tik);
                     } //движение при ожидании старта
 
 
@@ -138,15 +208,13 @@ namespace CP0
                 else if (status == 5) { status = 1; st5 = false; } // отключение прилипания
                 if ((status == 1) && (l == tik))
                 {
-
+                    if (MoveBall != null)
                     MoveBall(f1, tik);
                 } // движение мяча в игре
                 if (l == tik)
-                    for (int i = pasb; i < (pasb + actb); i++)
-                    {
-                        bon[i].move(l, f1);
-                          // !!!!!
-                    } // движение бонусов вниз
+                    if (MoveBonus != null)
+                       MoveBonus(l, f1);
+                // движение бонусов вниз
                 if (timer > 0)
                     timer--; // таймер действия бонуса
 
@@ -156,6 +224,7 @@ namespace CP0
                 {
                     Ball ext;
                     ext = ball;
+                    ext.StopDraw(this);
                     ball = new Ball(this);
                     ball.setX(ext.getX());
                     ball.setY(ext.getY());
@@ -163,7 +232,8 @@ namespace CP0
                     ball.setDy(ext.getDy());
                     ball.setDx(ext.getDx());
                      // установка напрвления
-                    ext.StopDraw(this);
+                    ext = null;
+                    
                     time = false;
                 } //смена огненного мяча на обычный
 
@@ -193,11 +263,10 @@ namespace CP0
                 }
             bon = new Bonus[bonc];
             platf = new Platform(268, 520, this);
-            ball= new Ball(this);
-            ball.startConf(288, 500);
-            SBlock(f1);
+            ball= new Ball(288, 500, (float)0, (float)0, this);
             f1.controlKeyPressed += setC;
             f1.TimeTickUpdate += refresh;
+            SBlock(f1);
             status = 2;
         }
 
@@ -210,13 +279,12 @@ namespace CP0
                 vib = (char)1;
                 if (napr == true)
                 {
- 
-                    ball.changeDir(vib, 0, 0);
+                    BallDChange(vib, 0, 0);
                 }
                 else
                 {
 
-                    ball.changeDir(vib, 1, 0);
+                    BallDChange(vib, 1, 0);
                 }
         } // обработка столкновения
 
@@ -258,6 +326,7 @@ namespace CP0
                 int o=0;
                 int p=0;
                 int tl = 0;  // l
+                int stolkcount = 0;
 
                 bool dob = false;
                 bool prev = false;
@@ -269,11 +338,7 @@ namespace CP0
                         {
 
                             tl++;
-                            if (tl == 2)
-                                if (prev)
-                                    dob = true;
-                                else dob = false;
-                            prev = true;
+
 
                             int blx = ukb[i, t].getX()*64;
                             int bly = ukb[i, t].getY()*16;
@@ -284,16 +349,23 @@ namespace CP0
                                 p = t;
                                 st = true;
                                 ukb[i, t].AgreeH(this);
+                                stolkcount++;
                                 char typeb = ukb[i, t].GetID();
                                 
+
                                 if ( typeb == (char)50)
                                 {
                                     bon[actb + pasb] = new Bonus((float)(blx + 8), (float)(bly + 8), (char)50, this);
-                                    bon[actb + pasb].show(f1);
                                     actb++;
                                 }
                                 ukb[i, t] = null;
                             }
+
+                            if (tl == 2)
+                                if (prev)
+                                    dob = true;
+                                else dob = false;
+                            prev = true;
 
                         }
                     }
@@ -302,7 +374,8 @@ namespace CP0
                     prev = false;
                     if (st) break;
                 } // проверка столкновения с блоками и вызов соответсвующих бонусов
-
+                if (SBon!=null)
+                SBon(f1);
 
                 for (int i = pasb; i < pasb + actb; i++)
                 {
@@ -311,13 +384,13 @@ namespace CP0
                     char boniID = bon[i].GetID();
                     if ((boniID==(char)50)&&(boniy >= 500) && (boniy <= 530) && (bonix > pdx - 20) && (bonix < pdx + 64))
                     {
-
-                        bon[i].hide(f1);
-                        bon[i] = null;
+                        bon[i].StopMove(this);
+                        HideBon(f1);
                         actb--;
                         pasb++;
-                        Ball ex = new Ball(this);
+                        Ball ex;
                         ex = ball;
+                        ex.StopDraw(this);
                         ball = new FireBall(this);
 
                         ball.setX(ex.getX());
@@ -325,25 +398,28 @@ namespace CP0
                         ball.setDx(ex.getDx());
                         ball.setDy(ex.getDy()); // установка напрвления
 
-                        ex.StopDraw(this);
+                        
+                        ex = null;
 
-                        timer = 1000;
+                        timer = 1500;
                     }
                     if (boniy >= 659)
                     {
-                        bon[i].hide(f1);
-                        bon[i] = null;
+                        
                         actb--;
                         pasb++;
+                        bon[i].StopMove(this);
+                        HideBon(f1);
                     }
                 } //проверка столкновения бонуса ID==50 с платформой, запуск FireBall
-
+                if (HideBon != null)
+                HideBon(f1);
 
                 if (st)
                 {
-                    MoveBall(f1, v);
-                    o *= 30;  //  высота
-                    p *= 120; // длина
+                    
+                    o *= 16;  //  высота
+                    p *= 64; // длина
 
                     //Msg.id=2;
                     //ball->event(Msg); 
@@ -354,23 +430,28 @@ namespace CP0
 
 
 
-                    if (l > 1)
+                    if (stolkcount > 1)
                         if (dob)
                             stolkn(true, false);
                         else
                             stolkn(false, false);
                     else
                     {
-                        if ((a>o-20)&&(a<o+64)&&((b<=p-20) || (b>=p+16)))
+                        if ((a>p-20)&&(a<p+64)&&((b<=o-20) || (b>=o+16)))
                             stolkn(true, false);
                         else
-                            //if ((b<p-20)&&(b>p+16)&&((a<=o-20)||(a>=o+64)))
-                            stolkn(false, false);
+                            if ((b > o - 20) && (b < o + 16) && ((a <= p - 20) || (a >= p + 64)))
+                                stolkn(false, false);
+                            else
+                            {
+                                stolkn(false, false);
+                                stolkn(true, false);
+                            }
 
                     }
 
                 } // если столе=кновение с блоком было, то оно обрабатывается для мяча
-                if (l == 0)
+                if (tl == 0)
                     status = 13;
             }
 

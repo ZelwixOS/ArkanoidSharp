@@ -8,6 +8,7 @@ using System.Resources;
 
 namespace CP0
 {
+    [Serializable]
     class Ball
     {
         protected Bitmap balls;
@@ -19,6 +20,8 @@ namespace CP0
         {
             lv.MoveBall += move;
             lv.SBlock += show;
+            lv.BallDChange += changeDir;
+            lv.BallStart += startZap;
         }
 
         
@@ -30,19 +33,19 @@ namespace CP0
             this.dx = dx;
             this.dy = dy;
             lv.MoveBall += move;
+            lv.SBlock += show;
+            lv.BallDChange += changeDir;
+            lv.BallStart += startZap;
         }
 
         public void StopDraw(Level lv)
         {
             lv.MoveBall -= move;
             lv.SBlock -= show;
+            lv.BallDChange -= changeDir;
+            lv.BallStart -= startZap;
         }
 
-        public void startConf(float x, float y)
-        {
-            this.x = x;
-            this.y = y;
-        }
 
         public float getX()
         {
@@ -105,22 +108,25 @@ namespace CP0
             dy = -1 + (dx * dx);
             show(f1);
         }
-        public virtual void changeDir(char r, float c = 0, float s = 0)
+        public virtual bool changeDir(char r, float c = 0, float s = 0)
         {
+            bool logic= false;
             if (r != 0)
             {
-                if ((r == 100) && (x < 534))
+                if (((r == 'в') || (r == 'В') || (r == 'd') || (r == 'D')) && (x < 534))
                 {
                     dx = 1;
                     dy = 0;
+                    logic=true;
                 }
-                else if ((r == 100) && (x >= 534)) dx = 0;
-                if ((r == 97) && (x > 22))
+                else if (((r == 'в') || (r == 'В') || (r == 'd') || (r == 'D')) && (x >= 534)) dx = 0; // (r == 'в') || (r == 'В') || (r == 'd') || (r == 'D')
+                if (((r == 'ф') || (r== 'Ф') || (r == 'a') || (r == 'A')) && (x > 22))
                 {
                     dx = -1;
                     dy = 0;
+                    logic = true;
                 }
-                else if ((r == 97) && (x <= 22)) dx = 0;
+                else if (((r == 'ф') || (r== 'Ф') || (r == 'a') || (r == 'A')) && (x <= 22)) dx = 0;
 
                 if (r == 5)
                 {
@@ -163,6 +169,7 @@ namespace CP0
                     dy = dy * (-1);
 
             }
+            return logic;
         }
         public void move(Form1 f1, int k)
         {

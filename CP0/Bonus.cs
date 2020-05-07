@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace CP0
 {
+    [Serializable]
     class Bonus
     {
         protected float x, y;
@@ -23,7 +24,15 @@ namespace CP0
             this.x = x;
             this.y = y;
             this.ID = ID;
-            lv.SBlock += show;
+            lv.SBon += show;
+            lv.MoveBonus += move;
+        }
+
+        public void StopMove(Level lv)
+        {
+            lv.SBon -= show;
+            lv.MoveBonus -= move;
+            lv.HideBon += hide;
         }
 
         public float GetX()
@@ -44,7 +53,7 @@ namespace CP0
         public void move(int k, Form1 f1)
         {
             hide(f1);
-            y = y + k;
+            y = y + (float)1.5 * k;
             show(f1);
         }
         public void hide(Form1 f1)

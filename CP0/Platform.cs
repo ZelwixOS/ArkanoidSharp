@@ -7,6 +7,7 @@ using System.Drawing;
 
 namespace CP0
 {
+    [Serializable]
     class Platform
     {
        private Bitmap platf;
@@ -16,6 +17,7 @@ namespace CP0
            this.x = x;
            this.w = w;
            lv.SBlock += show;
+           lv.PlatfMove += move;
        }
 
        public int getX()
@@ -38,15 +40,15 @@ namespace CP0
            w = a;
        }
 
-	   public void move(char key, Form1 f1, int k)
+	   protected void move(char key, Form1 f1, int k)
        {
-           if ((key == 100) && (x < 512))
+           if (((key == 'в') || (key == 'В') || (key == 'd') || (key == 'D')) && (x < 512))
            {
                hide(f1);
                x += k;
                show(f1);
            }
-           if ((key == 97) && (x > 0))
+           if (((key == 'ф') || (key == 'Ф') || (key == 'a') || (key == 'A')) && (x > 0))
            {
                hide(f1);
                x -= k;
@@ -54,7 +56,7 @@ namespace CP0
            }
        }
 
-       public void show(Form1 f1)
+       protected void show(Form1 f1)
        {
            platf = new Bitmap(CP0.Properties.Resources.Pltfs);
            f1.dc.DrawImage(platf, (int)x , (int)w);
