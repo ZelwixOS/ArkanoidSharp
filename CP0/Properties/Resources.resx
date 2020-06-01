@@ -157,4 +157,10 @@
   <data name="SW2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\Sprites\SW2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Hpoint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Sprites\Hpoint.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PointPix" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\Sprites\PointPix.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

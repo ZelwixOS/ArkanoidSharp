@@ -143,6 +143,16 @@ namespace CP0.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Hpoint {
+            get {
+                object obj = ResourceManager.GetObject("Hpoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap menback1 {
             get {
                 object obj = ResourceManager.GetObject("menback1", resourceCulture);
@@ -166,6 +176,16 @@ namespace CP0.Properties {
         internal static System.Drawing.Bitmap Pltfs0 {
             get {
                 object obj = ResourceManager.GetObject("Pltfs0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap PointPix {
+            get {
+                object obj = ResourceManager.GetObject("PointPix", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

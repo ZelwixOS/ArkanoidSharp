@@ -21,8 +21,10 @@ namespace CP0
         int a=0;
         int b = 0;
         protected char[,] matr = new char[5, 9];
+        Point Pointer;
 
         public event ShHide SBlock;
+        public event ShHide MovePoint;
 
     
 
@@ -31,11 +33,14 @@ namespace CP0
             InitializeComponent();
             dc = pictureBox1.CreateGraphics();
             pictureBox1.BackColor = Color.Black;
+
         }
 
         public void SetP(Form1 buff)
         {
             f1 = buff;
+            Pointer = new Point(a, b, this);
+            SBlock(this);
         }
 
         private void Redac_FormClosed(object sender, FormClosedEventArgs e)
@@ -46,7 +51,9 @@ namespace CP0
 
         private void Redac_KeyPress(object sender, KeyPressEventArgs e)
         {
+            MovePoint(this);
             if (a < 5)
+            {
                 if (b < 9)
                 {
                     matr[a, b] = e.KeyChar;
@@ -55,11 +62,26 @@ namespace CP0
                         case (char)49: ukb[a, b] = new Block(b, a, (char)49, this); break;
                         case (char)50: ukb[a, b] = new BonBlock(b, a, (char)50, this); break;
                     }
-                    if (SBlock != null)
-                        SBlock(this);
+
                     b++;
                 }
-                else { b = 0; a++; }
+                else
+                {
+                    b = 0; a++;
+                    if (a < 5)
+                    {
+                        matr[a, b] = e.KeyChar;
+                        switch (e.KeyChar)
+                        {
+                            case (char)49: ukb[a, b] = new Block(b, a, (char)49, this); break;
+                            case (char)50: ukb[a, b] = new BonBlock(b, a, (char)50, this); break;
+                        }
+                        b++;
+                    }
+                }
+                if (SBlock != null)
+                    SBlock(this);
+            }
             else textBox1.Enabled = true;
         }
 
@@ -92,6 +114,11 @@ namespace CP0
                     }
             }
             label1.Text = "Saved as " + fname +".kl";
+        }
+
+        private void Redac_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
