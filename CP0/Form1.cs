@@ -23,11 +23,14 @@ namespace CP0
     {
         private static Level Lvl;
         public Graphics dc;
+        public Redac RedF;
+
         const int lvlc = 4;
         int currChoice = 1;
         bool newStart = true;
         bool GS = false;
         bool pause = false;
+        
 
         public event controlKey controlKeyPressed;
         public event ObjSend TimeTickUpdate;
@@ -113,6 +116,7 @@ namespace CP0
                 pictureBox1.BackgroundImage = CP0.Properties.Resources.fontCLR;
                 pictureBox1.Image = CP0.Properties.Resources.fontCLR;
                 dc = pictureBox1.CreateGraphics();
+                pictureBox3.Hide();
                 LvlCreate(this);
                 SetTimer();
             }
@@ -183,17 +187,33 @@ namespace CP0
 
         private void LoadPoint()
         {
-            timer1.Enabled = false; 
+            timer1.Enabled = false;
+
             Lvl.LevelOff(this);
-            Lvl = null;
-            Lvl = new Level(this);
-            Lvl.LvlInter(this);
+            //Lvl = null;
+            pictureBox1.BackgroundImage = CP0.Properties.Resources.fontCLR;
+            pictureBox1.Image = CP0.Properties.Resources.fontCLR;
+            //Lvl = new Level(this);
+          
+
             IFormatter format = new BinaryFormatter();
             Stream stream = new FileStream("./Save/LvlSavePoint.bin", FileMode.Open);
             Lvl = (Level)format.Deserialize(stream);
+            Lvl.LvlInter(this);
             stream.Close();
-            Lvl.LoadLevel();
+            
+            Lvl.LoadLevel(this);
             timer1.Enabled = true; 
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            RedF = new Redac();
+            RedF.Show();
+            RedF.Activate();
+            this.Hide();
+            this.Enabled = false;
+            RedF.SetP(this); 
         }
     }
 }

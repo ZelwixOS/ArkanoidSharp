@@ -68,34 +68,34 @@ namespace CP0
             stream = new FileStream("./Save/ballSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
             format.Serialize(stream, ball);
             stream.Close(); 
-            ////
             stream = new FileStream("./Save/ukbSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
             format.Serialize(stream, ukb);
             stream.Close();
             stream = new FileStream("./Save/bonSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
             format.Serialize(stream, bon);
             stream.Close();
+
         }
 
 
-        public void LoadLevel()
+        public void LoadLevel(Form1 f1)
         {
-            IFormatter format = new BinaryFormatter();
-            Stream stream = new FileStream("./Save/platfSP.bin", FileMode.Open);
-            platf = (Platform) format.Deserialize(stream);
-            stream.Close();
+            //IFormatter format = new BinaryFormatter();
+            //Stream stream = new FileStream("./Save/platfSP.bin", FileMode.Open);
+            //platf = (Platform) format.Deserialize(stream);
+            //stream.Close();
 
-            stream = new FileStream("./Save/ballSP.bin", FileMode.Open);  
-            ball = (Ball)format.Deserialize(stream);
-            stream.Close();
+            //stream = new FileStream("./Save/ballSP.bin", FileMode.Open);  
+            //ball = (Ball)format.Deserialize(stream);
+            //stream.Close();
 
-            stream = new FileStream("./Save/ukbSP.bin", FileMode.Open);
-            ukb = (Block[,]) format.Deserialize(stream);
-            stream.Close();
-
-            stream = new FileStream("./Save/bonSP.bin", FileMode.Open);
-            bon = (Bonus[]) format.Deserialize(stream);
-            stream.Close();
+            //stream = new FileStream("./Save/ukbSP.bin", FileMode.Open);
+            //ukb = (Block[,]) format.Deserialize(stream);
+            //stream.Close();            
+            //stream = new FileStream("./Save/bonSP.bin", FileMode.Open);
+            //bon = (Bonus[]) format.Deserialize(stream);
+            //stream.Close();
+            fd = true;
         }
 
         public int getStatus()
