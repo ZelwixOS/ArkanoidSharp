@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutWindow.Designer.cs">
+      <DependentUpon>AboutWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ball.cs" />
     <Compile Include="balls.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -60,6 +66,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelpWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpWindow.Designer.cs">
+      <DependentUpon>HelpWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Level.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Point.cs" />
@@ -71,6 +83,9 @@
     <Compile Include="Redac.Designer.cs">
       <DependentUpon>Redac.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AboutWindow.resx">
+      <DependentUpon>AboutWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="balls.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>balls.Designer.cs</LastGenOutput>
@@ -78,6 +93,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpWindow.resx">
+      <DependentUpon>HelpWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -106,9 +124,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Sprites\block.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="bin\Debug\Sprites\block.bmp" />
     <None Include="bin\Debug\Sprites\menback1.png" />
     <None Include="bin\Debug\Sprites\ball.bmp" />
@@ -122,10 +137,12 @@
     <None Include="bin\Debug\Sprites\PointPix.png" />
     <None Include="bin\Debug\Sprites\ball.png" />
     <None Include="bin\Debug\Sprites\ball0.png" />
-    <Content Include="Sprites\ball.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Help\1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

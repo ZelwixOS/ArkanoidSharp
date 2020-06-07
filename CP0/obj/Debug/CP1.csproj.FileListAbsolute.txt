@@ -9,3 +9,5 @@ D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP1.csproj.GenerateResource.Cache
 D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.exe
 D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.pdb
 D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.Redac.resources
+D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.AboutWindow.resources
+D:\Univ\Programms\ArkanoidSharp\CP0\obj\Debug\CP0.HelpWindow.resources

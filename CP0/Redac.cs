@@ -49,7 +49,7 @@ namespace CP0
             f1.Enabled = true;
         }
 
-        private void Redac_KeyPress(object sender, KeyPressEventArgs e)
+        private void Redac_KeyPress(object sender, KeyPressEventArgs e) // нажатие клавиши
         {
 
                 MovePoint(this);
@@ -90,7 +90,7 @@ namespace CP0
                 }
         }
 
-        private void ResetB_Click(object sender, EventArgs e)
+        private void ResetB_Click(object sender, EventArgs e) // Reset
         {
             textBox1.Enabled = false;
             button1.Enabled = false;
@@ -109,7 +109,7 @@ namespace CP0
             Pointer.SetCoord(a, b, this);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // Save
         {
             string fname = textBox1.Text + ".kl";
             using (BinaryWriter writer = new BinaryWriter(File.Open(fname, FileMode.Create))) 

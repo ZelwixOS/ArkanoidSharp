@@ -24,6 +24,8 @@ namespace CP0
         private static Level Lvl;
         public Graphics dc;
         public Redac RedF;
+        public AboutWindow About;
+        public HelpWindow Help;
 
         const int lvlc = 4;
         int currChoice = 1;
@@ -225,12 +227,16 @@ namespace CP0
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e) // Help
         {
-
+            Help = new HelpWindow();
+            Help.Show();
+            Help.Activate();
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) //About
         {
-
+            About = new AboutWindow();
+            About.Show();
+            About.Activate();
         }
     }
 }
