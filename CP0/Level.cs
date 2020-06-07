@@ -38,6 +38,7 @@ namespace CP0
         public int status;
         protected int timer;
         protected char c;
+        protected char bufc;
         Block[,] ukb = new Block[5, 9];
         Platform platf;
         Ball ball;
@@ -59,42 +60,10 @@ namespace CP0
         bool st5 = false;
         bool fd = true;
 
-        public void SaveLevel()
-        {
-            IFormatter format = new BinaryFormatter();
-            Stream stream = new FileStream("./Save/platfSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-            format.Serialize(stream, platf);
-            stream.Close();
-            stream = new FileStream("./Save/ballSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-            format.Serialize(stream, ball);
-            stream.Close(); 
-            stream = new FileStream("./Save/ukbSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-            format.Serialize(stream, ukb);
-            stream.Close();
-            stream = new FileStream("./Save/bonSP.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-            format.Serialize(stream, bon);
-            stream.Close();
-
-        }
 
 
         public void LoadLevel(Form1 f1)
         {
-            //IFormatter format = new BinaryFormatter();
-            //Stream stream = new FileStream("./Save/platfSP.bin", FileMode.Open);
-            //platf = (Platform) format.Deserialize(stream);
-            //stream.Close();
-
-            //stream = new FileStream("./Save/ballSP.bin", FileMode.Open);  
-            //ball = (Ball)format.Deserialize(stream);
-            //stream.Close();
-
-            //stream = new FileStream("./Save/ukbSP.bin", FileMode.Open);
-            //ukb = (Block[,]) format.Deserialize(stream);
-            //stream.Close();            
-            //stream = new FileStream("./Save/bonSP.bin", FileMode.Open);
-            //bon = (Bonus[]) format.Deserialize(stream);
-            //stream.Close();
             fd = true;
         }
 
@@ -132,6 +101,7 @@ namespace CP0
         protected void setC(char kb)
         {
             c = kb;
+            bufc = c;
         }
 
 
@@ -162,7 +132,7 @@ namespace CP0
                 l++;
                 if (l == tik+1)
                     l = 0;
-                if (c != (char)0)
+                if ((c != (char)0)||(bufc != (char)0))
                 {
 
                     if ((c == 32) && (status == 2))
@@ -173,16 +143,17 @@ namespace CP0
 
                     if (status == 5)
                     {
-                        if ((c == 'в') || (c == 'В') || (c == 'd') || (c == 'D')) // вправо
+                        if ((bufc == 'в') || (bufc == 'В') || (bufc == 'd') || (bufc == 'D')) // вправо
                         {
                             if (BallDChange!=null)
                             BallDChange((char)5, 1, 0);
                         }
-                        else if ((c == 'a') || (c == 'A') || (c == 'ф') || (c == 'Ф'))
+                        else if ((bufc == 'a') || (bufc == 'A') || (bufc == 'ф') || (bufc == 'Ф'))
                         {
                             if (BallDChange != null)
                                 BallDChange((char)5, -1, 0);
                         }
+                        bufc = (char)0;
                     } // отклонение при прилипании
 
 
@@ -199,7 +170,6 @@ namespace CP0
 
 
                     c = (char)0;
-
                 }  // обработка нажатой клавиши
                 if (l == tik)
                     provStolk(l, f1);

@@ -51,24 +51,11 @@ namespace CP0
 
         private void Redac_KeyPress(object sender, KeyPressEventArgs e)
         {
-            MovePoint(this);
-            if (a < 5)
-            {
-                if (b < 9)
-                {
-                    matr[a, b] = e.KeyChar;
-                    switch (e.KeyChar)
-                    {
-                        case (char)49: ukb[a, b] = new Block(b, a, (char)49, this); break;
-                        case (char)50: ukb[a, b] = new BonBlock(b, a, (char)50, this); break;
-                    }
 
-                    b++;
-                }
-                else
+                MovePoint(this);
+                if (a < 5)
                 {
-                    b = 0; a++;
-                    if (a < 5)
+                    if (b < 9)
                     {
                         matr[a, b] = e.KeyChar;
                         switch (e.KeyChar)
@@ -76,17 +63,37 @@ namespace CP0
                             case (char)49: ukb[a, b] = new Block(b, a, (char)49, this); break;
                             case (char)50: ukb[a, b] = new BonBlock(b, a, (char)50, this); break;
                         }
+
                         b++;
                     }
+                    else
+                    {
+                        b = 0; a++;
+                        if (a < 5)
+                        {
+                            matr[a, b] = e.KeyChar;
+                            switch (e.KeyChar)
+                            {
+                                case (char)49: ukb[a, b] = new Block(b, a, (char)49, this); break;
+                                case (char)50: ukb[a, b] = new BonBlock(b, a, (char)50, this); break;
+                            }
+                            b++;
+                        }
+                    }
+                    if (SBlock != null)
+                        SBlock(this);
                 }
-                if (SBlock != null)
-                    SBlock(this);
-            }
-            else textBox1.Enabled = true;
+                if ((a == 4) && (b == 9))
+                {
+                    textBox1.Enabled = true;
+                    button1.Enabled = true;
+                }
         }
 
         private void ResetB_Click(object sender, EventArgs e)
         {
+            textBox1.Enabled = false;
+            button1.Enabled = false;
             pictureBox1.Image = null;
             pictureBox1.BackColor = Color.Black;
             a = 0;
@@ -99,6 +106,7 @@ namespace CP0
                     ukb[i, j].DisagreeS(this);
                     ukb[i, j] = null;
                 }
+            Pointer.SetCoord(a, b, this);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -113,7 +121,7 @@ namespace CP0
                         writer.Write(matr[i, j]);
                     }
             }
-            label1.Text = "Saved as " + fname +".kl";
+            label1.Text = "Saved as " + fname;
         }
 
         private void Redac_Load(object sender, EventArgs e)

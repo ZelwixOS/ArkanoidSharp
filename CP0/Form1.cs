@@ -42,10 +42,9 @@ namespace CP0
             InitializeComponent();
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void pictureBox2_Click(object sender, EventArgs e) // Play
         {
-           //Graphics gr = Graphics.FromHwnd(pictureBox2.Handle);
-           // gr.Clear(Color.White);
+
             pictureBox2.Load("./Sprites/STARTcl.png");
             
 
@@ -56,43 +55,42 @@ namespace CP0
 
         }
 
-        private void pictureBox2_MouseHover(object sender, EventArgs e)
+        private void pictureBox2_MouseHover(object sender, EventArgs e) // мышка на Play
         {
             pictureBox2.Load("./Sprites/STARTon.png"); 
-            //Graphics gr = Graphics.FromHwnd(pictureBox2.Handle);
-             //gr.Clear(Color.White);
+
         }
 
-        private void pictureBox2_MouseLeave(object sender, EventArgs e)
+        private void pictureBox2_MouseLeave(object sender, EventArgs e) // мышка не на Play
         {
             pictureBox2.Load("./Sprites/START.png"); 
         }
 
 
-        private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
+        private void pictureBox2_MouseDown(object sender, MouseEventArgs e) // мышка нажата Play
         {
             pictureBox2.Load("./Sprites/STARTcl.png");
             pictureBox2.Hide();
             LvlChoice((char)0);
         }
 
-        //public delegate void CurLvl();
-        //public event CurLvl Refresh;
 
-        private void LvlChoice(char t)
+
+        private void LvlChoice(char t) // выбор уровня
         {
-            if (newStart ==true)
+            if (newStart ==true) // начальная отрисовка
             {
                 if (Lvl != null)
                 {
                     Lvl.LevelOff(this);
                 }
                 label1.Visible = true;
+                pictureBox3.Visible = true;
                 pictureBox1.Load("./Sprites/LvlChoiceBFG.png");
                 Lvl = new Level(this);
                 newStart = false;
             }
-            if (t != 13)
+            if (t != 13)        // переключение
             {
                 if ((t == 'w') || (t == 'W') || (t == 'ц') || (t == 'Ц') || (t == 'd') || (t == 'в') || (t == 'D') || (t == 'В'))
                 {
@@ -108,7 +106,7 @@ namespace CP0
                 }
                 label1.Text = currChoice.ToString();
             }
-            else 
+            else  // выбор
             {
                 GS = true;
                 stringGotten("./Levels/"+currChoice+".kl");
@@ -128,19 +126,19 @@ namespace CP0
             timer1.Enabled = true;
         }
 
-        private void Form1_KeyPress_1(object sender, KeyPressEventArgs e)
+        private void Form1_KeyPress_1(object sender, KeyPressEventArgs e) //  нажати на клавишу
         {
             // установка переменной c = коду клавиши
             if (pictureBox2.Visible == false)
             {
-                //Lvl.setC(e.KeyChar);
 
-                if ((timer1.Enabled == false) && (GS == false))
+
+                if ((timer1.Enabled == false) && (GS == false))  // для выбора уровня
                     LvlChoice(e.KeyChar);
 
-                else
+                else        
                 {
-                    switch (e.KeyChar)
+                    switch (e.KeyChar)                         // при игре
                     {
                         case 'p': if (!pause) { timer1.Enabled = false; pause = true; } else { timer1.Enabled = true; pause = false; } break;
                         case 'r': pictureBox1.BackgroundImage = CP0.Properties.Resources.fontCLR;
@@ -159,7 +157,7 @@ namespace CP0
             
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e) // тик таймера
         {
             if ((Lvl.getStatus() != 12) && (Lvl.getStatus() != 13))
             {
@@ -174,10 +172,9 @@ namespace CP0
             }
         }
 
-        private void SavePoint()
+        private void SavePoint() // сохранение
         {
             timer1.Enabled = false; 
-            Lvl.SaveLevel();
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream("./Save/LvlSavePoint.bin", FileMode.Create, FileAccess.Write, FileShare.None);
             formatter.Serialize(stream, Lvl);
@@ -185,15 +182,15 @@ namespace CP0
             timer1.Enabled = true; 
         }
 
-        private void LoadPoint()
+        private void LoadPoint() // загрузка
         {
             timer1.Enabled = false;
 
             Lvl.LevelOff(this);
-            //Lvl = null;
+
             pictureBox1.BackgroundImage = CP0.Properties.Resources.fontCLR;
             pictureBox1.Image = CP0.Properties.Resources.fontCLR;
-            //Lvl = new Level(this);
+
           
 
             IFormatter format = new BinaryFormatter();
@@ -206,7 +203,7 @@ namespace CP0
             timer1.Enabled = true; 
         }
 
-        private void pictureBox3_Click(object sender, EventArgs e)
+        private void pictureBox3_Click(object sender, EventArgs e) // Конструктор
         {
             RedF = new Redac();
             RedF.Show();
@@ -214,6 +211,26 @@ namespace CP0
             this.Hide();
             this.Enabled = false;
             RedF.SetP(this); 
+        }
+
+        private void pictureBox3_MouseHover(object sender, EventArgs e) // Наведение на Конструктор
+        {
+            pictureBox3.Load("./Sprites/ConstIconNewOn2.png"); 
+        }
+
+        private void pictureBox3_MouseLeave(object sender, EventArgs e) // мышка не на Конструкторе
+        {
+            pictureBox3.Load("./Sprites/ConstIcon1.png"); 
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e) // Help
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) //About
+        {
+
         }
     }
 }

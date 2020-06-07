@@ -74,6 +74,7 @@
     <EmbeddedResource Include="balls.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>balls.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -112,11 +113,6 @@
     <None Include="bin\Debug\Sprites\menback1.png" />
     <None Include="bin\Debug\Sprites\ball.bmp" />
     <None Include="bin\Debug\Sprites\Pltfs.png" />
-    <None Include="Resources\Pltfs0.bmp" />
-    <None Include="Resources\fontCLR.bmp" />
-    <None Include="Resources\pictureBox1.BackgroundImage.png" />
-    <None Include="Resources\ball0.bmp" />
-    <None Include="Resources\block0.bmp" />
     <None Include="bin\Debug\Sprites\BonBlock64.png" />
     <None Include="bin\Debug\Sprites\FBBonus20.png" />
     <None Include="bin\Debug\Sprites\fireball20.png" />
@@ -124,7 +120,12 @@
     <None Include="bin\Debug\Sprites\SL2.png" />
     <None Include="bin\Debug\Sprites\Hpoint.png" />
     <None Include="bin\Debug\Sprites\PointPix.png" />
+    <None Include="bin\Debug\Sprites\ball.png" />
+    <None Include="bin\Debug\Sprites\ball0.png" />
     <Content Include="Sprites\ball.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

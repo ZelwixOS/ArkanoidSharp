@@ -186,8 +186,7 @@ namespace CP0
         }
         public virtual void show(Form1 f1)
         {
-            // Ris[0] = new Bitmap(WindowsApplication1.Properties.Resources.sred);
-            //balls = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("PC0.Resources.ball.bmp"));
+
             balls = new Bitmap(CP0.Properties.Resources.ball);
             f1.dc.DrawImage(balls, (int)x, (int)y);
         }

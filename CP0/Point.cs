@@ -32,11 +32,28 @@ namespace CP0
                     if (y >= 9)
                     {
                         y = 0; x++;
-                        show(f1);
+                        if (x >= 5)
+                        {
+                            hide(f1);
+                            f1.SBlock -= show;
+                        }
+
+                        else
+                            show(f1);
+                        
                     }
             }
-            else hide(f1);
         }
+
+        public void SetCoord(int a, int b, Redac f1)
+        {
+            f1.SBlock += show;
+            hide(f1);
+            x = a;
+            b = y;
+            show(f1);
+        }
+
 
         public void show(Redac f1)
         {
