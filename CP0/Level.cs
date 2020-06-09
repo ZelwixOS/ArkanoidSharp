@@ -37,15 +37,15 @@ namespace CP0
         protected char[,] matr = new char[5, 9];
         public int status;
         protected int timer;
-        protected char c;
-        protected char bufc;
+        protected char c = (char)0;
+        protected char bufc = (char)0;
         Block[,] ukb = new Block[5, 9];
         Platform platf;
         Ball ball;
         Bonus [] bon;
 
         int bonc, actb, pasb;
-        const int lvlc = 3;
+ 
 
         /* Статусы
         13 -победа
@@ -366,7 +366,7 @@ namespace CP0
                         ball.setX(ex.getX());
                         ball.setY(ex.getY()); // установка координат
                         ball.setDx(ex.getDx());
-                        ball.setDy(ex.getDy()); // установка напрвления
+                        ball.setDy(ex.getDy()); // установка направления
 
                         
                         ex = null;

@@ -11,7 +11,6 @@ namespace CP0
     class Block
     {
         private Bitmap blocks;
-       // private Bitmap block;
         protected int x, y;
         protected char ID;
 
